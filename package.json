@@ -1,0 +1,23 @@
+{
+  "name": "qiqibot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ."
+  },
+  "type": "module",
+  "author": "",
+  "license": "SEE LICENSE IN license.txt",
+  "dependencies": {
+    "@discordjs/opus": "^0.7.0",
+    "@johnrob1880/string-calc": "^1.0.2",
+    "discord-music-player": "^8.3.2",
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.0",
+    "ffmpeg-static": "^4.4.1",
+    "nodemon": "^2.0.15",
+    "request": "^2.88.2",
+    "uuid": "^8.3.2"
+  }
+}
