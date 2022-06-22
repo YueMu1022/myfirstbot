@@ -197,7 +197,7 @@ function progress(i, player) {
     var bar
     try {
         bar = guildqueue.createProgressBar({
-            size: 60,
+            size: 40
         })
     } catch (error) {
         var errEmbed = createembed()
@@ -209,7 +209,7 @@ function progress(i, player) {
     const song = guildqueue.nowPlaying
     var Embed = createembed()
     Embed.title = '播放進度'
-    Embed.description = `正在播放[${song.name}](${song.url})\n${bar.prettier.replace(new RegExp(' ', 'gm'), '=')}`
+    Embed.description = `正在播放[${song.name}](${song.url})\n${bar.prettier.replace(new RegExp(' ', 'gm'), '-')}`
     Embed.image.url = song.thumbnail
     i.reply({ embeds: [Embed], ephemeral: true })
 }
