@@ -197,7 +197,7 @@ function progress(i, player) {
     var bar
     try {
         bar = guildqueue.createProgressBar({
-            size: 40
+            size: 50
         })
     } catch (error) {
         var errEmbed = createembed()
