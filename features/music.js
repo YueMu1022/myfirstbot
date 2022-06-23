@@ -68,7 +68,7 @@ async function play(i, player) {
     await queue.join(i.member.voice.channel)
     var played
     var Embed = createembed()
-    var emoji = ''
+    var emoji = '<:Youtube:989027640780419072>'
     if (song.startsWith('https://soundcloud.com/')) {
         emoji = '<:Soundcloud:989027644727246878>'
     } else if (song.startsWith('https://www.youtube.com/')) {
