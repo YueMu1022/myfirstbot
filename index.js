@@ -20,6 +20,7 @@ import vote from './features/vote.js';
 // 載入lib
 import errcall from './lib/err.js'
 import deploycmd from './lib/deploy-cmd.js';
+import createembed from './lib/embed.js';
 
 const prefix = process.env.prefix
 
@@ -106,6 +107,22 @@ client.on('messageCreate', (msg) => {
     }else if (msg.content.startsWith(`${prefix}pull`)) {
         pull(msg)
     }
+})
+
+player.on('queueEnd', async (queue) => {
+    const channel = await client.channels.fetch(queue.data)
+    var Embed = createembed()
+    Embed.title = '播放'
+    Embed.description = '隊列已撥放完畢!機器人已退出語音頻道'
+    channel.send({ embeds: [Embed] })
+})
+
+player.on('channelEmpty', async (queue) => {
+    const channel = await client.channels.fetch(queue.data)
+    var Embed = createembed()
+    Embed.title = '播放'
+    Embed.description = '所有使用者均已退出語音頻道!機器人已退出語音頻道'
+    channel.send({ embeds: [Embed] })
 })
 // 登入
 client.login(process.env.TOKEN)

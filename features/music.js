@@ -66,16 +66,9 @@ async function play(i, player) {
     }
     const queue = player.createQueue(i.guild.id)
     await queue.join(i.member.voice.channel)
+    queue.setData(i.channel.id)
     var played
     var Embed = createembed()
-    var emoji = '<:Youtube:989027640780419072>'
-    if (song.startsWith('https://soundcloud.com/')) {
-        emoji = '<:Soundcloud:989027644727246878>'
-    } else if (song.startsWith('https://www.youtube.com/')) {
-        emoji = '<:Youtube:989027640780419072>'
-    } else if (song.startsWith('https://open.spotify.com/')) {
-        emoji = '<:Spotify:989027643250851860>'
-    }
     if (song.includes('&list=') || song.startsWith('https://open.spotify.com/playlist/')) {
         played = await queue.playlist(song).catch(() => {
             if (!guildqueue) {
@@ -92,7 +85,7 @@ async function play(i, player) {
         Embed.title = '播放'
         Embed.image.url = played.thumbnail
     }
-    Embed.description = `<a:check:985064886759456780> 已將${emoji}[${played.name}](${played.url})加入到播放隊列`
+    Embed.description = `<a:check:985064886759456780> 已將[${played.name}](${played.url})加入到播放隊列\n\n> 🎤 ${played.author}\n> 🕘 ${played.duration}`
     i.editReply({ embeds: [Embed], ephemeral: true })
 }
 
