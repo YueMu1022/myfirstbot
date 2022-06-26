@@ -7,7 +7,6 @@ const player = new Player(client)
 // 載入指令包
 import cmdvote from './cmd/vote.js';
 import ping from './cmd/ping.js';
-import forex from './cmd/forex.js';
 import help from './cmd/help.js';
 import calc from './cmd/calc.js';
 import random from './cmd/random.js';
@@ -21,7 +20,6 @@ import vote from './features/vote.js';
 // 載入lib
 import errcall from './lib/err.js'
 import deploycmd from './lib/deploy-cmd.js';
-import createembed from './lib/embed.js'
 
 const prefix = process.env.prefix
 
@@ -76,10 +74,6 @@ client.on('interactionCreate', (i) => {
             cmdvote(i);
             return;
         };
-        if (i.commandName == 'forex') {
-            forex(i);
-            return;
-        };
         if (i.commandName == 'help') {
             help(i);
             return;
@@ -99,14 +93,6 @@ client.on('interactionCreate', (i) => {
         if (i.commandName == 'music') {
             music.index(i, player);
             return;
-        }
-        // admin
-        if (i.user.id != '891242744989769799' && i.user.id != '410036441129943050' && i.user.id != '831883841417248778') {
-            var errEmbed = createembed()
-            errEmbed.title = '指令錯誤'
-            errEmbed.description = '❌ 這些指令只有機器人擁有者可以執行'
-            i.reply({ embeds: [errEmbed], ephemeral: true })
-            return
         }
     };
 });
