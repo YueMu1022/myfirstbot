@@ -1,5 +1,5 @@
 {
-  "name": "qiqibot",
+  "name": "mybot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,8 +12,9 @@
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
     "@johnrob1880/string-calc": "^1.0.2",
+    "bili-api": "^1.8.1",
     "discord-music-player": "^8.3.2",
-    "discord.js": "^13.7.0",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.0",
     "ffmpeg-static": "^4.4.1",
     "nodemon": "^2.0.15",

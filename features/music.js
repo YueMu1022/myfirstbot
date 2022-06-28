@@ -1,5 +1,6 @@
 import createembed from '../lib/embed.js'
 import { MessageActionRow, MessageButton } from 'discord.js'
+import biliApi from 'bili-api'
 
 /**
  * @param {import('discord.js').CommandInteraction<import('discord.js').CacheType>} i
@@ -56,13 +57,15 @@ async function play(i, player) {
         return
     }
     const guildqueue = player.getQueue(i.guild.id)
-    const song = i.options.getString('關鍵字或網址')
+    var song = i.options.getString('關鍵字或網址')
     var errEmbed = createembed()
-    if (song.includes('https://www.bilibili.com/')) {
-        errEmbed.title = '播放錯誤'
-        errEmbed.description = '❌ bilibili?想得美'
-        i.editReply({ embeds: [errEmbed], ephemeral: true })
-        return
+    if (song.startsWith('https://www.bilibili.com/')) {
+        const bvid = song.replace('https://www.bilibili.com/video/', '').split('?')[0]
+        const bilibilivideo = await biliApi({
+            bvid: bvid
+        }, ['title'])
+        const bilibilititle = bilibilivideo.view.data.title
+        song = bilibilititle
     }
     const queue = player.createQueue(i.guild.id)
     await queue.join(i.member.voice.channel)
@@ -70,19 +73,25 @@ async function play(i, player) {
     var played
     var Embed = createembed()
     if (song.includes('&list=') || song.startsWith('https://open.spotify.com/playlist/')) {
+        Embed.title = '播放清單'
         played = await queue.playlist(song).catch(() => {
             if (!guildqueue) {
                 queue.stop()
             }
+            Embed.description = '❌ 找不到播放清單'
+            i.editReply({ embeds: [Embed], ephemeral: true })
+            return
         })
-        Embed.title = '播放清單'
     }else{
+        Embed.title = '播放'
         played = await queue.play(song).catch(() => {
             if (!guildqueue) {
                 queue.stop()
             }
+            Embed.description = '❌ 找不到歌曲'
+            i.editReply({ embeds: [Embed], ephemeral: true })
+            return
         })
-        Embed.title = '播放'
         Embed.image.url = played.thumbnail
     }
     Embed.description = `<a:check:985064886759456780> 已將[${played.name}](${played.url})加入到播放隊列\n\n> 🎤 ${played.author}\n> 🕘 ${played.duration}`

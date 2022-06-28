@@ -17,6 +17,7 @@ import pull from './cmd/admin/pull.js';
 import sync from './cmd/admin/sync.js';
 // 載入功能包
 import vote from './features/vote.js';
+import btnrole from './features/btnrole.js';
 // 載入lib
 import errcall from './lib/err.js'
 import deploycmd from './lib/deploy-cmd.js';
@@ -58,15 +59,15 @@ client.on('interactionCreate', (i) => {
             music.btn(i, player)
             return
         }
-    };
-
-    if (i.isSelectMenu()) {
+        if (i.customId.startsWith('role')) {
+            btnrole.buttonclick(i)
+            return
+        }
+    }else if (i.isSelectMenu()) {
         if (i.customId == 'role') {
             selectRole.select(i)
         }
-    };
-    
-    if (i.isCommand()) {
+    }else if (i.isCommand()) {
         if (i.commandName == 'ping') {
             ping(i);
             return;
@@ -94,8 +95,17 @@ client.on('interactionCreate', (i) => {
         if (i.commandName == 'music') {
             music.index(i, player);
             return;
+        };
+        if (i.commandName == 'rolebutton') {
+            btnrole.createrole(i)
+            return
         }
-    };
+    }else if (i.isModalSubmit()) {
+        if (i.customId.startsWith('role')) {
+            btnrole.modalsubmit(i)
+            return
+        }
+    }
 });
 
 client.on('messageCreate', (msg) => {
