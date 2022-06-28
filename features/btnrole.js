@@ -6,6 +6,13 @@ import createembed from '../lib/embed.js'
  */
 
 function createrole(i) {
+    if (!i.member.permissions.has('ADMINISTRATOR')) {
+        const errEmbed = createembed()
+        errEmbed.title = '權限不足'
+        errEmbed.description = '執行此命令需要管理者`ADMINISTRATOR`權限'
+        i.reply({ embeds: [errEmbed], ephemeral: true })
+        return
+    }
     const roles = [
         i.options.getRole('身分組1'),
         i.options.getRole('身分組2', false),
@@ -13,6 +20,16 @@ function createrole(i) {
     ].filter((r) => {
         return r != null
     })
+    const repeat = roles.filter((r, index) => {
+        return roles.indexOf(r) != index
+    })
+    if (repeat.length) {
+        var errEmbed = createembed()
+        errEmbed.title = '身分組選擇訊息錯誤'
+        errEmbed.description = '❌ 請確認沒有重複的身分組'
+        i.reply({ embeds: [errEmbed], ephemeral: true })
+        return
+    }
     const rolecolors = [
         i.options.getString('身分組1的顏色'),
         i.options.getString('身分組2的顏色', false),
@@ -20,6 +37,14 @@ function createrole(i) {
     ].filter((r) => {
         return r != null
     })
+    if (rolecolors.length != roles.length) {
+        var errEmbed = createembed()
+        errEmbed.title = '身分組選擇訊息錯誤'
+        errEmbed.description = '❌ 請確認每個身分組沒有缺少對應的顏色'
+        i.reply({ embeds: [errEmbed], ephemeral: true })
+        return
+    }
+    
     var modal = new Modal()
         .setTitle('建立身分組選擇訊息(按鈕)');
     var cid = 'role'
@@ -61,13 +86,6 @@ async function modalsubmit(i) {
     const styles = data.filter((d) => {
         return isNaN(Number(d))
     })
-    if (!styles.length == roles.length) {
-        var errEmbed = createembed()
-        errEmbed.title = '身分組選擇訊息錯誤'
-        errEmbed.description = '❌ 請確認每個身分組沒有缺少對應的顏色'
-        i.reply({ embeds: [errEmbed], ephemeral: true })
-        return
-    }
     const title = i.fields.getTextInputValue('title')
     const description = i.fields.getTextInputValue('description')
     var Embed = createembed()
