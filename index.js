@@ -9,7 +9,6 @@ import cmdvote from './cmd/vote.js';
 import ping from './cmd/ping.js';
 import calc from './cmd/calc.js';
 import random from './cmd/random.js';
-import timer from './cmd/timer.js';
 import music from './features/music.js'
 // 載入管理員指令包
 import pull from './cmd/admin/pull.js';
@@ -81,10 +80,6 @@ client.on('interactionCreate', (i) => {
         };
         if (i.commandName == 'random') {
             random(i);
-            return;
-        };
-        if (i.commandName == 'timer') {
-            timer(i);
             return;
         };
         if (i.commandName == 'music') {
