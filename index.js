@@ -7,7 +7,6 @@ const player = new Player(client)
 // 載入指令包
 import cmdvote from './cmd/vote.js';
 import ping from './cmd/ping.js';
-import help from './cmd/help.js';
 import calc from './cmd/calc.js';
 import random from './cmd/random.js';
 import timer from './cmd/timer.js';
@@ -74,10 +73,6 @@ client.on('interactionCreate', (i) => {
         };
         if (i.commandName == 'vote') {
             cmdvote(i);
-            return;
-        };
-        if (i.commandName == 'help') {
-            help(i);
             return;
         };
         if (i.commandName == 'calc') {
