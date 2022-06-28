@@ -61,6 +61,13 @@ async function modalsubmit(i) {
     const styles = data.filter((d) => {
         return isNaN(Number(d))
     })
+    if (!styles.length == roles.length) {
+        var errEmbed = createembed()
+        errEmbed.title = '身分組選擇訊息錯誤'
+        errEmbed.description = '❌ 請確認每個身分組沒有缺少對應的顏色'
+        i.reply({ embeds: [errEmbed], ephemeral: true })
+        return
+    }
     const title = i.fields.getTextInputValue('title')
     const description = i.fields.getTextInputValue('description')
     var Embed = createembed()
