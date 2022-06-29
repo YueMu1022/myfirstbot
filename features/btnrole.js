@@ -107,7 +107,7 @@ async function modalsubmit(i) {
     var replyEmbed = createembed()
     replyEmbed.title = '身分組選擇訊息'
     replyEmbed.description = '已成功建立身分組選擇訊息'
-    i.reply({ embed: [replyEmbed], ephemeral: true})
+    i.reply({ embeds: [replyEmbed], ephemeral: true})
 }
 
 /**
