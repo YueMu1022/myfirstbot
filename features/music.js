@@ -63,7 +63,7 @@ async function play(i, player) {
         const bvid = song.replace('https://www.bilibili.com/video/', '').split('?')[0]
         const bilibilivideo = await biliApi({
             bvid: bvid
-        }, ['title'])
+        }, ['title']).catch()
         const bilibilititle = bilibilivideo.view.data.title
         song = bilibilititle
     }
@@ -84,15 +84,21 @@ async function play(i, player) {
         })
     }else{
         Embed.title = '播放'
+        var havesong = true
         played = await queue.play(song).catch(() => {
             if (!guildqueue) {
                 queue.stop()
             }
             Embed.description = '❌ 找不到歌曲'
             i.editReply({ embeds: [Embed], ephemeral: true })
+            havesong = false
             return
         })
-        Embed.image.url = played.thumbnail
+        if (havesong) {
+            Embed.image.url = played.thumbnail
+        }else{
+            return
+        }
     }
     Embed.description = `<a:check:985064886759456780> 已將[${played.name}](${played.url})加入到播放隊列\n\n> 🎤 ${played.author}\n> 🕘 ${played.duration}`
     i.editReply({ embeds: [Embed], ephemeral: true })
